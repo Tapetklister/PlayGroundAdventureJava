@@ -5,29 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 
 import model.Player;
-import locations.Shop;
-import locations.Location;
-import locations.LocationID;
-import locations.Plains;
+
+import model.locations.*;
 
 public class Handler {
 
-	public Player player;
-	private List<Location> locations;
-	private HashMap<Integer, HashMap<String, Integer>> locDirections;
+	public Player player = new Player();
+	private List<Location> locations = new ArrayList<Location>();
+	private HashMap<Integer, HashMap<String, Integer>> locDirections = new HashMap<Integer, HashMap<String, Integer>>();
 	
 	public Handler() {
 		
-		player = new Player();
 		setupDirections();
-		this.locations = new ArrayList<Location>();
+		setupLocations();
 	}
 	
 	public Location getLocation (LocationID id) {
 		return locations.get(id.ordinal());
 	}
 	
-	public Location goToLocation (LocationID id, String direction) {
+	public Location goToLocation (LocationID id, String direction) {							// Takes in the current location's ID and a direction, and if possible, returns a new direction based on the arguments
 		
 		if (locations.get(id.ordinal()).getExitPoints().containsKey(direction)) {
 			int destinationID = locations.get(id.ordinal()).getExitPoints().get(direction);
@@ -39,8 +36,6 @@ public class Handler {
 	}
 	
 	public void setupDirections() {
-		
-		locDirections = new HashMap<Integer, HashMap<String, Integer>>();
 		
 		HashMap<String, Integer> directionMap1 = new HashMap<String, Integer>();
 		directionMap1.put("west", 1);
@@ -56,7 +51,6 @@ public class Handler {
 		
 		HashMap<String, Integer> directionMap4 = new HashMap<String, Integer>();
 		directionMap4.put("north", 0);
-		
 		
 		locDirections.put(0, directionMap1);
 		locDirections.put(1, directionMap2);

@@ -4,18 +4,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 import handlers.Handler;
-import locations.Location;
-import locations.LocationID;
-import locations.Shop;
-import model.Item;
-import model.ItemID;
-import locations.Plains;
+import model.item.Item;
+import model.item.ItemID;
+import model.locations.*;
 
 public class Game {
 
-	private Handler handler;
-	private boolean gameOver;
-	private Scanner scanner;
+	private Handler handler = new Handler();
+	private boolean gameOver = false;
+	private Scanner scanner = new Scanner(System.in);
 	private Location currentLocation;
 	private List<String> directionList = new ArrayList<String>();
 	
@@ -25,7 +22,7 @@ public class Game {
 		
 		while (!gameOver) {																								// Main game loop
 			
-			String nextMove = scanner.nextLine();
+			String nextMove = scanner.nextLine();																		// Input command
 			
 			if (directionList.contains(nextMove))
 				move(nextMove);
@@ -49,24 +46,18 @@ public class Game {
 		}
 	}
 	
-	private void init() {																// Initial setup
+	private void init() {																								// Initial setup
 		
 		directionList.add("east");
 		directionList.add("west");
 		directionList.add("north");
 		directionList.add("south");
 		
-		handler = new Handler();
-		gameOver = false;
-		scanner = new Scanner(System.in);
-		
-		handler.setupLocations();
-		
 		currentLocation = handler.getLocation(LocationID.crossroads);
 		System.out.println(currentLocation.getPresentation());
 	}
 	
-	private void move(String direction) {												// Loads a different location
+	private void move(String direction) {																				// Loads a different location
 		
 		currentLocation = handler.goToLocation(currentLocation.getID(), direction);
 		System.out.println(currentLocation.getPresentation());
@@ -81,29 +72,28 @@ public class Game {
 	
 	private void checkStatus() {														// Displays information about the player; HP, Gold and Inventory
 		
+		String statusString = "HP: " + handler.player.getHP() + "/100, Gold: " + handler.player.getGold() + ", Items: ";
 		List<Item> items = new ArrayList<Item>();
+		
 		if (handler.player.getItems().size() > 0) {
 			items = handler.player.getItems();
-		} else {
-			items.add(new Item("none", "", 0, null));
-		}
-		
-		String statusString = "HP: " + handler.player.getHP() + "/100, Gold: " + handler.player.getGold() + ", Items: ";
-		String commaString = "";
-		
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) != null) {
-				statusString += commaString;
-				statusString += items.get(i).getName();
-			} else {
-				System.out.println("Item == null");
+			String commaString = "";
+			for (int i = 0; i < items.size(); i++) {
+				if (items.get(i) != null) {
+					statusString += commaString;
+					statusString += items.get(i).getName();
+				} else {
+					System.out.println("Item == null");
+				}
+				commaString = ", ";
 			}
-			commaString = ", ";
+		} else {
+			statusString += "none";
 		}
 		System.out.println(statusString);
 	}
 	
-	private void enterCave() {
+	private void enterCave() {												// Loops through the Player's inventory. If the Talisman of Truth is found there, the player wins the game. If not, it's a loss.
 		
 		for (int i = 0; i < handler.player.getItems().size(); i++) {
 			if (handler.player.getItems().get(i).getID() == ItemID.talisman) {

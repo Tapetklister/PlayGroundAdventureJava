@@ -3,10 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.item.Item;
+
 public class Player {
 
 	private int hp = 100;
-	private int gold = 1000;
+	private int gold = 0;
 	private List<Item> items = new ArrayList<Item>();
 	
 	public int getHP() {
