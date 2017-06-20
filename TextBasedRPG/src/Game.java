@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 import handlers.Handler;
@@ -66,7 +65,7 @@ public class Game {
 			handler.player.restoreHP();
 		
 		if (currentLocation.getID() == LocationID.cave) {
-			enterCave();
+			checkGameOver();
 		}
 	}
 	
@@ -93,7 +92,7 @@ public class Game {
 		System.out.println(statusString);
 	}
 	
-	private void enterCave() {												// Loops through the Player's inventory. If the Talisman of Truth is found there, the player wins the game. If not, it's a loss.
+	private void checkGameOver() {												// Loops through the Player's inventory. If the Talisman of Truth is found there, the player wins the game. If not, it's a loss.
 		
 		for (int i = 0; i < handler.player.getItems().size(); i++) {
 			if (handler.player.getItems().get(i).getID() == ItemID.talisman) {

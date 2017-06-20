@@ -12,9 +12,6 @@ public class Shop extends Location {
 	
 	private ArrayList<Item> items;
 	
-	private Item charm;
-	private Item talisman;
-	
 	public Shop(String name, String presentation, HashMap<String, Integer> exitPoints, LocationID id) {
 		super(name, presentation, exitPoints, id);
 		
