@@ -57,10 +57,10 @@ public class Handler {
 		HashMap<String, Integer> directionMap4 = new HashMap<String, Integer>();
 		directionMap4.put("north", 0);
 		
-		locDirections.put(0, directionMap1);
-		locDirections.put(1, directionMap2);
-		locDirections.put(2, directionMap3);
-		locDirections.put(3, directionMap4);
+		locDirections.put(LocationID.crossroads.ordinal(), directionMap1);						// Makes sure you can access the available directions based on the location ID
+		locDirections.put(LocationID.plains.ordinal(), directionMap2);
+		locDirections.put(LocationID.shop.ordinal(), directionMap3);
+		locDirections.put(LocationID.pool.ordinal(), directionMap4);
 	}
 	
 	public void setupLocations() {
