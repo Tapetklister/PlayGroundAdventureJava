@@ -15,29 +15,34 @@ public class Handler {
 	private HashMap<Integer, HashMap<String, Integer>> locDirections = new HashMap<Integer, HashMap<String, Integer>>();
 	
 	public Handler() {
-		
 		setupDirections();
 		setupLocations();
 	}
 	
-	public Location getLocation (LocationID id) {
-		return locations.get(id.ordinal());
+	public Location getLocation (LocationID id) {												// Returns a location from the location list based on an ID
+		
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getID().equals(id)) {
+				return locations.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public Location goToLocation (LocationID id, String direction) {							// Takes in the current location's ID and a direction, and if possible, returns a new direction based on the arguments
 		
-		if (locations.get(id.ordinal()).getExitPoints().containsKey(direction)) {
-			int destinationID = locations.get(id.ordinal()).getExitPoints().get(direction);
-			return locations.get(destinationID);
-		} else {
-			System.out.println("You could not go there. Try another direction.");
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getID().equals(id) && locations.get(i).getExitPoints().containsKey(direction)) { // If the player can move in the desired direction, the destionation's ID is returned
+				int destinationID = locations.get(id.ordinal()).getExitPoints().get(direction);
+				return locations.get(destinationID);
+			}
 		}
 		return locations.get(id.ordinal());
 	}
 	
 	public void setupDirections() {
 		
-		HashMap<String, Integer> directionMap1 = new HashMap<String, Integer>();
+		HashMap<String, Integer> directionMap1 = new HashMap<String, Integer>();				// These HashMaps represents direction. Each locations needs at least one of those
 		directionMap1.put("west", 1);
 		directionMap1.put("east", 2);
 		directionMap1.put("south", 3);

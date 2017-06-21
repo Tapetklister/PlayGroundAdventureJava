@@ -12,15 +12,15 @@ public class Plains extends Location {
 		super(name, presentation, exitPoints, id);
 	}
 	
-	public void killMonster(Player player) {
+	public void killMonster(Player player) {											// Increases the player's gold value and decreases his/her health value.
 		Random random = new Random();
 		int damageTaken = random.nextInt(20)+1;
 		player.takeDamage(damageTaken);
 		
-		if (player.getHP() > 0) {
+		if (player.getHP() > 0) {														// If the player isn't dead, the player's gold and health values are changed.
 			
 			int goldRate = 1;
-			for (int i = 0; i < player.getItems().size(); i++) {						// Checks if the Player's inventory contains the Charm of Capitalism. If so, the goldRate is multiplied by ten.
+			for (int i = 0; i < player.getItems().size(); i++) {						// Checks if the Player's inventory contains the Charm of Capitalism. If so, the gold awarded is multiplied by ten.
 				if (player.getItems().get(i).getID() == ItemID.charm) goldRate = 10;
 			}
 			int awardedGold = (random.nextInt(10)+1) * goldRate;

@@ -24,20 +24,20 @@ public class Shop extends Location {
 		return items;
 	}
 	
-	public void checkShopInventory() {
+	public void checkShopInventory() {																			// Lists the shop's available wares
 		System.out.println("The shopkeeper has the following items in stock:");
 		for (int i = 0; i < items.size(); i++) {
 			System.out.println("- " + items.get(i).getName() + " (" + items.get(i).getPrice() + ")");
 		}
 	}
 	
-	public void buyItem(String itemName, Player player) {
+	public void buyItem(String itemName, Player player) {														// Lets the player try to buy an item
 		
 		for (int i = items.size()-1; i >= 0; i--) {
 			if (items.get(i).getBuyCommand().equals(itemName)) {
 				Item chosenItem = items.get(i);
 				
-				if (player.getGold() >= chosenItem.getPrice()) {
+				if (player.getGold() >= chosenItem.getPrice()) {												// If the player has enough gold, the item is removed from the shop's inventory and added to the player's inventory.
 					player.increaseGold(-chosenItem.getPrice());
 					System.out.println("You have bought the " + chosenItem.getName() + " for " + chosenItem.getPrice() + ".");
 					player.addItem(chosenItem);
