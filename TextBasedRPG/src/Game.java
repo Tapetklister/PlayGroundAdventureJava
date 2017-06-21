@@ -35,6 +35,9 @@ public class Game {
 		directionList.add("north");
 		directionList.add("south");
 		
+		System.out.println("-----Welcome to Playground Adventure-----\n");
+		System.out.println("Enter 'commands' to display the available commands\n");
+		
 		currentLocation = handler.getLocation(LocationID.crossroads);
 		System.out.println(currentLocation.getPresentation());
 	}
@@ -58,6 +61,8 @@ public class Game {
 			move(nextMove);
 		else if (nextMove.equals("status"))																				// Checks player status
 			checkStatus();
+		else if (nextMove.equals("commands"))
+			displayCommands();
 		else if (currentLocation.getID().equals(LocationID.shop)) {														// Enters shop, and enables commands specific to the shop.
 			Shop shop = (Shop) handler.getLocation(LocationID.shop);
 			if (nextMove.equals("look inventory")) {
@@ -94,6 +99,22 @@ public class Game {
 			statusString += "none";
 		}
 		System.out.println(statusString);
+	}
+	
+	private void displayCommands() {
+		
+		System.out.println("Anywhere:\n"
+				+ "		Move east: 'east'\n"
+				+ "		Move west: 'west'\n"
+				+ "		Move north: 'north'\n"
+				+ "		Move south: 'south'\n"
+				+ "		Check status: 'status'\n");
+		System.out.println("On the Plains of Grinding:\n"
+				+ "		Kill monster: 'kill monster'\n");
+		System.out.println("At the Hero's Shop:\n"
+				+ "		Browse: 'look inventory'\n"
+				+ "		Buy Charm of Capitalism: 'buy charm'\n"
+				+ "		Buy Talisman of Truth: 'buy talisman'\n");
 	}
 	
 	private void checkGameOver() {			// Loops through the Player's inventory. If the Talisman of Truth is found there, the player wins the game. If not, it's a loss.
